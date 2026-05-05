@@ -2,22 +2,18 @@
 // save_early_access.php
 require_once 'config.php';
 
-// Проверяем метод запроса
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'error' => 'Method not allowed']);
     exit();
 }
 
-// Получаем данные из запроса
 $input = json_decode(file_get_contents('php://input'), true);
 
-// Если данные не в JSON, пробуем получить из POST
 if (!$input && $_POST) {
     $input = $_POST;
 }
 
-// Валидация данных
 if (!$input || !isset($input['phone']) || !isset($input['os'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'error' => 'Phone and OS are required']);
@@ -27,29 +23,34 @@ if (!$input || !isset($input['phone']) || !isset($input['os'])) {
 $phone = trim($input['phone']);
 $os = trim($input['os']);
 
-// Валидация телефона (должен быть в формате +7XXXXXXXXXX)
-if (!preg_match('/^\+7[0-9]{10}$/', $phone)) {
+// Проверка формата телефона: +7 и затем 9 и еще 9 цифр (всего 11 символов с +7)
+if (!preg_match('/^\+7(9\d{9})$/', $phone, $matches)) {
     http_response_code(400);
-    echo json_encode(['success' => false, 'error' => 'Invalid phone number format']);
+    echo json_encode(['success' => false, 'error' => 'Номер должен начинаться с 9 (например: +79XXXXXXXXX)']);
     exit();
 }
 
-// Валидация ОС
+// Дополнительная проверка, что после +7 идет 9
+$numberAfterCode = substr($phone, 2); // убираем +7
+if ($numberAfterCode[0] !== '9') {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'Номер должен начинаться с 9']);
+    exit();
+}
+
 if (!in_array($os, ['android', 'ios'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'error' => 'Invalid OS selection']);
     exit();
 }
 
-// Получаем IP и User Agent
 $ipAddress = getClientIP();
 $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
 
-// Проверяем, не регистрировался ли уже этот номер за последние 24 часа
 try {
     $pdo = getDBConnection();
     
-    // Опционально: проверка на дубликаты (можно закомментировать)
+    // Проверка на дубликаты за последние 24 часа
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM early_access_users WHERE phone = ? AND created_at > DATE_SUB(NOW(), INTERVAL 24 HOUR)");
     $stmt->execute([$phone]);
     $recentCount = $stmt->fetchColumn();
@@ -57,12 +58,11 @@ try {
     if ($recentCount > 0) {
         echo json_encode([
             'success' => false, 
-            'error' => 'This phone number was already registered in the last 24 hours'
+            'error' => 'Этот номер уже регистрировался за последние 24 часа'
         ]);
         exit();
     }
     
-    // Сохраняем данные
     $stmt = $pdo->prepare("
         INSERT INTO early_access_users (phone, os, ip_address, user_agent) 
         VALUES (?, ?, ?, ?)
@@ -71,7 +71,6 @@ try {
     $stmt->execute([$phone, $os, $ipAddress, $userAgent]);
     $userId = $pdo->lastInsertId();
     
-    // Успешный ответ
     echo json_encode([
         'success' => true,
         'message' => 'Successfully registered for early access',

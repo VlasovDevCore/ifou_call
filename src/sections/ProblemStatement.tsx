@@ -176,13 +176,17 @@ export default function ProblemStatement() {
 
         {/* Right column with animated ring */}
         <div ref={rightRef} className="flex flex-1 items-center justify-center">
-          <div className="relative flex h-64 w-64 items-center justify-center md:h-80 md:w-80">
+          <div className="relative flex w-[300px] h-[300px] items-center justify-center md:h-[400px] md:w-[400px]">
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-[240px] h-[240px] md:h-[320px] md:w-[320px] border-2 border-white/40"
+            style={{ opacity: 0.4 }}
+          />
             <div
               ref={ringRef}
               className="absolute inset-0 rounded-full border-2 border-white/40"
               style={{ opacity: 0.4 }}
             />
-            <div className="text-center relative z-20">
+            <div className="text-center relative z-20 ">
               <div className="text-6xl font-extrabold tracking-[-0.03em] text-white md:text-7xl">
                 70%
               </div>

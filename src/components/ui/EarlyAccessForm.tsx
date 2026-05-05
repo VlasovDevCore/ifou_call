@@ -27,18 +27,29 @@ export default function EarlyAccessForm({
   });
   
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Устанавливаем Android по умолчанию при монтировании компонента
   useEffect(() => {
     if (!os) {
       setOs('android');
     }
   }, [os, setOs]);
 
+  // Автоматически скрываем сообщение через 3 секунды
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
   const validateForm = () => {
+    const phonePattern = /^9\d{9}$/;
     const newErrors = {
-      phone: inputValue.length < 10,
+      phone: !phonePattern.test(inputValue),
       os: !os
     };
     setErrors(newErrors);
@@ -53,8 +64,7 @@ export default function EarlyAccessForm({
       const fullPhone = `+7${inputValue}`;
       
       try {
-        // Отправляем данные на сервер
-        const response = await fetch('/api/save_early_access.php', {
+        const response = await fetch('https://ifou.ru/api/save_early_access.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -67,16 +77,29 @@ export default function EarlyAccessForm({
         
         const data = await response.json();
         
-        if (data.success) {
+        // Успешная отправка или номер уже существует
+        if (data.success || (data.error && (data.error.includes('уже зарегистрирован') || data.error.includes('24 часа')))) {
           setPhone(fullPhone);
+          
+          // Очищаем поле ввода
+          setInputValue('');
+          
+          // Очищаем ошибки
+          setErrors({
+            phone: false,
+            os: false
+          });
+          
+          // Вызываем колбэк успеха в обоих случаях
           onSuccess();
         } else {
-          // Показываем ошибку пользователю
-          alert(data.error || 'Произошла ошибка. Пожалуйста, попробуйте снова.');
+          // Показываем сообщение об ошибке
+          setSuccessMessage('❌ ' + (data.error || 'Произошла ошибка. Попробуйте позже.'));
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('Ошибка сети. Проверьте подключение к интернету.');
+        // Показываем сообщение об ошибке
+        setSuccessMessage('❌ Ошибка сети. Проверьте подключение к интернету.');
       } finally {
         setIsLoading(false);
       }
@@ -86,11 +109,16 @@ export default function EarlyAccessForm({
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
     value = value.replace(/\D/g, '');
+    
     if (value.length > 10) value = value.slice(0, 10);
-    setInputValue(value);
-    if (errors.phone) {
+    
+    if (value.length > 0 && value[0] !== '9') {
+      setErrors(prev => ({ ...prev, phone: true }));
+    } else if (errors.phone) {
       setErrors(prev => ({ ...prev, phone: false }));
     }
+    
+    setInputValue(value);
   };
 
   const handleOsSelect = (selectedOs: string) => {
@@ -125,6 +153,19 @@ export default function EarlyAccessForm({
   return (
     <div className="w-full max-w-[480px]">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {/* Сообщение об успехе/ошибке */}
+        {successMessage && (
+          <div className={`text-center text-sm py-2 px-4 rounded-full ${
+            successMessage.includes('✅') 
+              ? 'bg-green-500/20 text-green-400'
+              : successMessage.includes('ℹ️')
+              ? 'bg-blue-500/20 text-blue-400'
+              : 'bg-red-500/20 text-red-400'
+          }`}>
+            {successMessage}
+          </div>
+        )}
+
         <div className="relative">
           <div 
             className="absolute left-5 top-1/2 -translate-y-1/2 text-base text-[#94a3b8] pointer-events-none"
@@ -137,7 +178,7 @@ export default function EarlyAccessForm({
             type="tel"
             value={getDisplayValue()}
             onChange={handlePhoneChange}
-            placeholder="(000) 000-00-00"
+            placeholder="(9XX) XXX-XX-XX"
             className={`h-14 w-full rounded-full border bg-[#fff] pl-[52px] pr-5 text-base text-black outline-none transition-all placeholder:text-[#94a3b8]/50 focus:border-[rgba(118,76,250,0.4)] focus:shadow-[0_0_20px_rgba(118,76,250,0.15)] ${
               errors.phone 
                 ? 'border-red-500 focus:border-red-500 focus:shadow-[0_0_20px_rgba(239,68,68,0.15)]' 

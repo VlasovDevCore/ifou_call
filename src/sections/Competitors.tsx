@@ -18,10 +18,9 @@ const rows = [
   { feature: 'API для интеграций (B2B)', values: [true, true, true, false] },
 ];
 
-// Добавьте этот компонент перед Roadmap
 const ArrowIcon = () => (
   <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10.3333 1L3.91667 7.41667L1 4.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10.3333 1L3.91667 7.41667L1 4.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
@@ -56,19 +55,22 @@ export default function Competitors() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[rgba(245,243,255,1)] px-6 py-24 md:py-32">
-      <div className="mx-auto max-w-[1300px]">
-        <div ref={headerRef} className="mb-16 text-center">
+    <section ref={sectionRef} className="bg-[rgba(245,243,255,1)] py-16 md:py-32 overflow-hidden">
+      <div className="mx-auto max-w-[1300px] px-6 md:px-6">
+        <div ref={headerRef} className="mb-12 md:mb-16 text-center">
           <div className="mb-4 text-[13px] font-medium uppercase tracking-[0.08em] text-[rgba(111,67,248,1)]">
             Конкурентное преимущество
           </div>
-          <h2 className="text-3xl font-bold tracking-[-0.02em] text-[rgba(19,20,29,1)] md:text-5xl">
+          <h2 className="text-3xl font-bold tracking-[-0.02em] text-[rgba(19,20,29,1)] md:text-5xl px-4 md:px-0">
             IFOU vs Telegram, VK, Мой Мир
           </h2>
         </div>
+      </div>
 
-        <div ref={tableRef} className="overflow-x-auto">
-          <div className="min-w-[640px]">
+      {/* Table with horizontal scroll on mobile */}
+      <div className="overflow-x-auto md:overflow-visible" style={{ scrollbarWidth: 'none' }}>
+        <div className="mx-auto max-w-[1300px] md:px-6">
+          <div className="min-w-[640px] md:min-w-0 px-4 md:px-0">
             {/* Header row */}
             <div className="table-row grid grid-cols-5 gap-0">
               <div className="p-4"></div>
@@ -112,12 +114,14 @@ export default function Competitors() {
                 ))}
               </div>
             ))}
-
-            {/* Summary */}
-            <div className="mt-4 pt-5 text-center text-sm leading-relaxed text-[rgba(111,67,248,1)]">
-              Единственная платформа с полным набором: мессенджер + соцсеть + монетизация + полное соответствие законодательству РФ
-            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Summary - outside scroll container */}
+      <div className="mx-auto max-w-[1300px] px-6 md:px-6 mt-4">
+        <div className="pt-5 text-center text-sm leading-relaxed text-[rgba(111,67,248,1)] px-4 md:px-0">
+          Единственная платформа с полным набором: мессенджер + соцсеть + монетизация + полное соответствие законодательству РФ
         </div>
       </div>
     </section>

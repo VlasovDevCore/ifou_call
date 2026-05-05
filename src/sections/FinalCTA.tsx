@@ -11,7 +11,7 @@ interface FinalCTAProps {
   setPhone: (v: string) => void;
   os: string;
   setOs: (v: string) => void;
-  onSuccess: () => void; // ← заменили submitted/setSubmitted на onSuccess
+  onSuccess: () => void;
 }
 
 const trustItems = [
@@ -78,17 +78,16 @@ export default function FinalCTA({ phone, setPhone, os, setOs, onSuccess }: Fina
     <section
       id="cta"
       ref={sectionRef}
-      className="relative flex items-center justify-center overflow-hidden pt-40"
+      className="relative flex items-center justify-center overflow-hidden pt-20 md:pt-40 pb-12 md:pb-20"
     >
-      <div className="relative z-10 mx-auto flex max-w-[700px] flex-col items-center px-6 pb-20 pt-0 text-center">
+      <div className="relative z-10 mx-auto flex max-w-[700px] flex-col items-center px-4 md:px-6 text-center">
         <h2
           ref={headlineRef}
-          className="text-[48px] font-bold leading-[52px] tracking-[-1.44px] text-white"
+          className="text-[28px] md:text-[48px] font-bold leading-[36px] md:leading-[52px] tracking-[-0.84px] md:tracking-[-1.44px] text-white px-2 md:px-0"
           style={{
             fontFamily: 'Inter, sans-serif',
             fontWeight: 700,
-            lineHeight: '52px',
-            letterSpacing: '-1.44px',
+            verticalAlign: 'middle',
           }}
         >
           Станьте одним из первых пользователей IFOU
@@ -96,11 +95,11 @@ export default function FinalCTA({ phone, setPhone, os, setOs, onSuccess }: Fina
 
         <p
           ref={subRef}
-          className="mt-6 max-w-[500px] text-[16px] leading-[26px] text-white"
+          className="mt-4 md:mt-6 max-w-[500px] text-[14px] md:text-[16px] leading-[22px] md:leading-[26px] text-white px-2 md:px-0"
           style={{
             fontFamily: 'Inter, sans-serif',
             fontWeight: 400,
-            lineHeight: '26px',
+            verticalAlign: 'middle',
           }}
         >
           Оставьте номер телефона, и мы пришлём вам ссылку на скачивание приложения как только оно будет
@@ -108,7 +107,7 @@ export default function FinalCTA({ phone, setPhone, os, setOs, onSuccess }: Fina
         </p>
 
         {/* Form */}
-        <div ref={formRef} className="mt-12 w-full max-w-[480px]">
+        <div ref={formRef} className="mt-8 md:mt-12 w-full max-w-[480px] px-2 md:px-0">
           <EarlyAccessForm
             phone={phone}
             setPhone={setPhone}
@@ -119,12 +118,12 @@ export default function FinalCTA({ phone, setPhone, os, setOs, onSuccess }: Fina
         </div>
 
         {/* Trust indicators */}
-        <div ref={trustRef} className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8">
+        <div ref={trustRef} className="mt-8 md:mt-12 flex flex-col md:flex-row flex-wrap justify-center gap-4 md:gap-6">
           {trustItems.map((item, i) => {
             const Icon = item.icon;
             return (
-              <div key={i} className="flex items-center gap-2 text-[14px] text-white">
-                <Icon size={16} className="text-white" />
+              <div key={i} className="flex items-center justify-center gap-2 text-[12px] md:text-[14px] text-white">
+                <Icon size={14} className="text-white md:size-[16px]" />
                 {item.label}
               </div>
             );

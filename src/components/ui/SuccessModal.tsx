@@ -1,5 +1,5 @@
 // components/SuccessModal.tsx
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface SuccessModalProps {
   isOpen: boolean;
@@ -39,7 +39,9 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
     canvas.height = h;
 
     const particles: { x: number; y: number; vx: number; vy: number; alpha: number }[] = [];
-    for (let i = 0; i < 60; i++) {
+    const particleCount = window.innerWidth < 768 ? 30 : 60; // Меньше частиц на мобильных
+    
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -84,7 +86,7 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
         if (p.y > h) { p.y = h; p.vy *= -1; }
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, window.innerWidth < 768 ? 1.5 : 2, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.fill();
       }
@@ -138,10 +140,10 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
             ? 'opacity-100 scale-100 translate-y-0'
             : 'opacity-0 scale-95 translate-y-8'
         }`}
-        style={{ height: '386px' }}
+        style={{ height: 'auto', minHeight: '386px' }}
       >
         <div
-          className="flex h-full relative flex-col justify-center rounded-[20px] border-b border-[rgba(158,141,255,1)] p-[60px] shadow-2xl"
+          className="flex h-full relative flex-col justify-center rounded-[20px] border-b border-[rgba(158,141,255,1)] p-6 md:p-[60px] shadow-2xl"
           style={{
             background: 'rgba(158, 141, 255, 1)',
             gap: '24px', 
@@ -155,22 +157,22 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
             style={{ width: '100%', height: '100%' }}
           />
 
-          {/* Декоративные SVG */}
-          <div className="pointer-events-none absolute right-[0] top-[0px] z-1">
+          {/* Декоративные SVG - скрываем на мобильных */}
+          <div className="pointer-events-none absolute right-[0] top-[0px] z-1 hidden md:block">
             <svg width="383" height="386" viewBox="0 0 383 386" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M476.129 -326.744C493.473 -78.2869 342.935 -114.964 185.445 -226.756C90.7591 -293.971 10.9475 -177.607 70.5324 -84.5061C137.835 37.9872 290.593 35.4576 406.247 77.518C480.815 117.838 471.105 211.647 387.881 230.313C322.363 242.867 249.607 275.766 246.044 351.826C238.259 461.654 364.468 506.456 454.021 467.179C527.062 450.089 635.083 327.137 696.028 385.775C725.629 414.281 701.574 448.174 696.933 481.077C683.336 561.767 772.943 630.162 847.224 595.76" stroke="#A896FF" stroke-width="100" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M476.129 -326.744C493.473 -78.2869 342.935 -114.964 185.445 -226.756C90.7591 -293.971 10.9475 -177.607 70.5324 -84.5061C137.835 37.9872 290.593 35.4576 406.247 77.518C480.815 117.838 471.105 211.647 387.881 230.313C322.363 242.867 249.607 275.766 246.044 351.826C238.259 461.654 364.468 506.456 454.021 467.179C527.062 450.089 635.083 327.137 696.028 385.775C725.629 414.281 701.574 448.174 696.933 481.077C683.336 561.767 772.943 630.162 847.224 595.76" stroke="#A896FF" strokeWidth="100" strokeMiterlimit="10" strokeLinecap="round"/>
             </svg>
           </div> 
           
-          <div className="pointer-events-none absolute left-[0] top-[0] z-1">
+          <div className="pointer-events-none absolute left-[0] top-[0] z-1 hidden md:block">
             <svg width="370" height="386" viewBox="0 0 370 386" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M-400.052 -55.3766C-362.74 83.2388 -79.4163 165.136 55.6364 116.537C124.329 91.8051 184.046 31.3242 189.472 -41.4591C194.869 -114.256 130.416 -189.818 57.9755 -180.583C2.72983 -173.547 -37.4448 -124.943 -64.3783 -76.185C-164.369 104.755 -154.158 346.559 -23.2283 506.532C19.1726 558.331 75.6859 602.372 141.77 613.053C207.854 623.733 283.118 593.373 309.495 531.836C339.68 461.426 295.36 375.805 228.456 338.45C161.551 301.095 79.8587 302.159 4.29726 314.845C-91.6295 330.961 -184.625 364.274 -268.959 412.724" stroke="#A896FF" stroke-width="100" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M-400.052 -55.3766C-362.74 83.2388 -79.4163 165.136 55.6364 116.537C124.329 91.8051 184.046 31.3242 189.472 -41.4591C194.869 -114.256 130.416 -189.818 57.9755 -180.583C2.72983 -173.547 -37.4448 -124.943 -64.3783 -76.185C-164.369 104.755 -154.158 346.559 -23.2283 506.532C19.1726 558.331 75.6859 602.372 141.77 613.053C207.854 623.733 283.118 593.373 309.495 531.836C339.68 461.426 295.36 375.805 228.456 338.45C161.551 301.095 79.8587 302.159 4.29726 314.845C-91.6295 330.961 -184.625 364.274 -268.959 412.724" stroke="#A896FF" strokeWidth="100" strokeMiterlimit="10" strokeLinecap="round"/>
             </svg>
           </div>
 
           {/* Верхний текст "Вы зарегистрированы" */}
           <p
-            className="uppercase z-3 relative"
+            className="uppercase z-3 relative text-center md:text-left"
             style={{
               fontFamily: 'Inter, sans-serif',
               fontWeight: 600,
@@ -192,12 +194,12 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
 
           {/* Заголовок "Спасибо за регистрацию!" */}
           <p
-            className="font-semibold text-white z-3 relative"
+            className="font-semibold text-white z-3 relative text-center md:text-left"
             style={{
               fontFamily: 'Inter, sans-serif',
               fontWeight: 700,
               fontStyle: 'normal',
-              fontSize: '48px',
+              fontSize: 'clamp(28px, 6vw, 48px)',
               lineHeight: '1.2',
               verticalAlign: 'middle',
               color: 'rgba(255, 255, 255, 1)',
@@ -209,13 +211,13 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
 
           {/* Основной текст */}
           <p
-            className="text-base text-white z-3 relative"
+            className="text-base text-white z-3 relative text-center md:text-left"
             style={{
               fontFamily: 'Inter, sans-serif',
               fontWeight: 400,
               fontStyle: 'normal',
-              fontSize: '16px',
-              lineHeight: '22px',
+              fontSize: 'clamp(14px, 4vw, 16px)',
+              lineHeight: '1.4',
               verticalAlign: 'middle',
               color: 'rgba(255, 255, 255, 1)',
               textAlign: 'left',
@@ -227,10 +229,11 @@ export default function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
           {/* Кнопка "Супер" с градиентом */}
           <button
             onClick={onClose}
-            className="mt-4 w-full z-3 relative rounded-[40px] px-6 py-[18px] text-center text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 hover:scale-105"
+            className="mt-4 w-full z-3 relative rounded-[40px] px-6 py-[18px] text-center text-sm font-semibold text-white transition-all duration-300 hover:opacity-90 active:scale-95 md:hover:scale-105"
             style={{
               fontFamily: 'Inter, sans-serif',
-              height: '56px',
+              minHeight: '56px',
+              height: 'auto',
               background: 'linear-gradient(90.94deg, #764CFA -5.72%, #A78BFA 112.67%)',
               border: 'none',
             }}

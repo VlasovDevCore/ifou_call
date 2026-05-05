@@ -44,32 +44,53 @@ export default function Screenshots() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[rgba(245,243,255,1)] px-6 py-24 md:py-32">
-      <div className="mx-auto max-w-[1400px]">
-        <div ref={headerRef} className="mb-16 text-center">
+    <section ref={sectionRef} className="bg-[rgba(245,243,255,1)] py-16 md:py-24 overflow-hidden">
+      <div className="mx-auto max-w-[1400px] px-6 md:px-6">
+        <div ref={headerRef} className="mb-8 md:mb-16 text-center">
           <div className="mb-4 text-[13px] font-medium uppercase tracking-[0.08em] text-[rgba(111,67,248,1)]">
             Мобильное приложение
           </div>
           <h2 className="text-3xl font-bold tracking-[-0.02em] text-[rgba(19,20,29,1)] md:text-5xl">
             Красивый. Мощный. Интуитивный.
           </h2>
-          <p className="mx-auto mt-4 max-w-[600px] text-base text-[rgba(69,66,94,1)]">
+          <p className="mx-auto mt-4 max-w-[600px] text-base text-[rgba(69,66,94,1)] px-4 md:px-0">
             Ознакомьтесь с интерфейсом IFOU — от авторизации до видеозвонков.
           </p>
         </div>
+      </div>
 
-        <div
-          ref={galleryRef}
-          className="flex snap-x snap-mandatory gap-10 overflow-x-auto pb-8 md:grid md:grid-cols-6 md:overflow-visible"
-          style={{ scrollbarWidth: 'none' }}
-        >
+      {/* Mobile horizontal scroll */}
+      <div
+        ref={galleryRef}
+        className="flex snap-x snap-mandatory gap-20 mb:gap-6 overflow-x-auto py-8 md:hidden"
+        style={{ 
+          scrollbarWidth: 'none',
+          paddingLeft: 'calc((100% - 180px) / 2)',
+          paddingRight: 'calc((100% - 180px) / 2)',
+        }}
+      >
+        {screenshots.map((s, i) => (
+          <div
+            key={i}
+            className="flex-shrink-0 snap-center"
+            style={{ transform: `rotate(${s.rotate})`, marginTop: i % 2 === 0 ? '0' : '20px' }}
+          >
+            <div className="phone-mockup w-[180px]">
+              <img src={s.src} alt={s.label} className="h-auto w-full" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop grid */}
+      <div className="hidden md:block mx-auto max-w-[1400px] px-6">
+        <div className="grid grid-cols-6 gap-6">
           {screenshots.map((s, i) => (
             <div
               key={i}
-              className="flex-shrink-0 snap-center"
-              style={{ transform: `rotate(${s.rotate})`, marginTop: i % 2 === 0 ? '0' : '20px' }}
+              style={{ transform: `rotate(${s.rotate})`, marginTop: i % 2 === 0 ? '0' : '24px' }}
             >
-              <div className="phone-mockup mx-auto w-[180px] md:w-full">
+              <div className="phone-mockup w-full">
                 <img src={s.src} alt={s.label} className="h-auto w-full" />
               </div>
             </div>

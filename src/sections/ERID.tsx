@@ -16,6 +16,7 @@ export default function ERID() {
   const textRef = useRef<HTMLDivElement>(null);
   const pillsRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null); // Добавлен реф для кольца
 
   // Particle system
   useEffect(() => {
@@ -91,6 +92,22 @@ export default function ERID() {
     };
   }, []);
 
+  // Анимация кольца (как в ProblemStatement)
+  useEffect(() => {
+    if (ringRef.current) {
+      gsap.fromTo(ringRef.current,
+        { scale: 0.8, opacity: 0.6 },
+        {
+          scale: 1.2,
+          opacity: 0,
+          duration: 2,
+          repeat: -1,
+          ease: "power2.out",
+        }
+      );
+    }
+  }, []);
+
   useEffect(() => {
     gsap.fromTo(
       shieldRef.current,
@@ -133,17 +150,22 @@ export default function ERID() {
       <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-0" />
 
       <div className="relative z-10 mx-auto flex max-w-[1300px] flex-col items-center gap-16 md:flex-row md:gap-8">
-        {/* Left - Shield */}
+        {/* Left - Shield with ring */}
         <div ref={shieldRef} className="flex flex-1 items-center justify-center">
           <div className="relative flex h-60 w-60 items-center justify-center md:h-64 md:w-64">
+            {/* Статичное кольцо (фон) */}
             <div
-              className="animate-shield-pulse absolute inset-0 rounded-full"
-              style={{
-                background: 'radial-gradient(circle, #764cfa 0%, #4c1d95 100%)',
-              }}
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full w-[240px] h-[240px] md:h-[256px] md:w-[256px] border-2 border-white/40"
+              style={{ opacity: 0.4 }}
             />
-            <div className="animate-shield-pulse absolute inset-0 rounded-full border-2 border-[#a78bfa]" style={{ opacity: 0.5, animationDelay: '2s' }} />
-            <div className="relative text-center">
+            {/* Анимированное пульсирующее кольцо */}
+            <div
+              ref={ringRef}
+              className="absolute inset-0 rounded-full border-2 border-white/40"
+              style={{ opacity: 0.4 }}
+            />
+            {/* Текст ERID */}
+            <div className="relative text-center z-20">
               <div className="text-5xl font-extrabold text-white md:text-6xl">ERID</div>
             </div>
           </div>

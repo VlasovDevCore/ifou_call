@@ -222,26 +222,25 @@ useEffect(() => {
         </div>
 
         <div ref={timelineRef} className="relative">
-          {/* Центральная линия - строго по центру */}
-        <div
-          ref={lineRef}
-          className="absolute left-1/2 top-0 w-[2px] -translate-x-1/2 mt-[20px]"
-          style={{
-            background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.4) 50%, #fff 100%)',
-            height: '0px',
-            willChange: 'height',
-            zIndex: 2,
-          }}
-        />
+<div
+  ref={lineRef}
+  className="absolute left-1/2 top-[10px] md:top-0 w-[2px] -translate-x-1/2 mt-[20px] md:left-1/2 md:-translate-x-1/2 max-md:left-0 max-md:mt-[2px] max-md:translate-x-0"
+  style={{
+    background: 'linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.4) 50%, #fff 100%)',
+    height: '0px',
+    willChange: 'height',
+    zIndex: 2,
+  }}
+/>
 
-        {/* Центральная линия - фоновая (прозрачная) */}
-        <div
-          className="absolute left-1/2 top-0 h-[calc(100% - 250px )] w-[2px] -translate-x-1/2"
-          style={{
-            background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.1) 100%)',
-            zIndex: 1,
-          }}
-        />
+{/* Фоновая линия */}
+<div
+  className="absolute left-1/2 top-0 h-[calc(100%-310px)] md:h-[calc(100%-270px)] mt-[10px] w-[2px] -translate-x-1/2 max-md:left-0 max-md:translate-x-0"
+  style={{
+    background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.1) 100%)',
+    zIndex: 1,
+  }}
+/>
 
           <div className="flex flex-col gap-12 md:gap-16">
             {phases.map((phase, i) => (
@@ -252,17 +251,17 @@ useEffect(() => {
                 }`}
               >
                 {/* Точка на центральной линии */}
-                <div className="timeline-dot absolute w-[20px] h-[20px] left-1/2 top-0 z-10 -translate-x-1/2 mt-[10px]">
-                  <div
-                    className={`flex w-[20px] h-[20px] items-center justify-center rounded-full border-2 transition-all duration-300 ${
-                      phase.completed
-                        ? 'border-white bg-white'
-                        : 'border-white/50 bg-[#b7a1fc]'
-                    }`}
-                  >
-                    {phase.completed && <ArrowIcon />}
-                  </div>
-                </div>
+<div className="timeline-dot absolute w-[20px] h-[20px] left-1/2 top-[-7px] md:top-0 z-10 -translate-x-1/2 mt-[10px] ml-[1px] md:ml-0 max-md:left-0 max-md:translate-x-0">
+  <div
+    className={`flex w-[20px] h-[20px] items-center justify-center rounded-full border-2 transition-all duration-300 ${
+      phase.completed
+        ? 'border-white bg-white'
+        : 'border-white/50 bg-[#b7a1fc]'
+    }`}
+  >
+    {phase.completed && <ArrowIcon />}
+  </div>
+</div>
 
                 {/* Дата (десктоп) */}
                 <div
@@ -282,7 +281,7 @@ useEffect(() => {
                 {/* Карточка контента */}
                 <div
                   className={`flex-1 ${
-                    phase.side === 'left' ? 'ml-8 md:pr-8 md:pl-0' : 'mr-8 md:pl-8 md:pr-0'
+                    phase.side === 'left' ? 'ml-8 md:pr-8 md:pl-0' : 'mr-8 ml-8 md:ml-0s mr-0 md:mr-8 md:pl-8 md:pr-0'
                   }`}
                 >
                   {/* Дата (мобильная) */}

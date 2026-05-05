@@ -8,6 +8,7 @@ import Features from './sections/Features';
 import ERID from './sections/ERID';
 import TechStack from './sections/TechStack';
 import Roadmap from './sections/Roadmap';
+import RoadmapMobile from './sections/RoadmapMobile';
 import Competitors from './sections/Competitors';
 import FinalCTA from './sections/FinalCTA';
 import Footer from './sections/Footer';
@@ -17,7 +18,20 @@ export default function App() {
   const [phone, setPhone] = useState('');
   const [os, setOs] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showMobileRoadmap, setShowMobileRoadmap] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Определяем, какую версию Roadmap показывать
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setShowMobileRoadmap(window.innerWidth < 768);
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // Particle system для фиолетового блока
   useEffect(() => {
@@ -123,7 +137,11 @@ export default function App() {
       <Features />
       <ERID />
       <TechStack />
-      <Roadmap />
+      
+      {/* Условный рендеринг Roadmap */}
+      {!showMobileRoadmap && <Roadmap />}
+      {showMobileRoadmap && <RoadmapMobile />}
+      
       <Competitors />
       <div 
         className="relative bg-[rgba(111,67,248,1)]"
@@ -137,7 +155,7 @@ export default function App() {
         />
         
         {/* SVG декорации */}
-        <div className="pointer-events-none absolute right-[-600px] top-[0]">
+        <div className="pointer-events-none absolute right-[-600px] top-[0] hidden md:block">
           <svg width="1400" height="1659" viewBox="0 0 1400 1659" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path opacity="0.08" d="M1324.76 244.858C1077.58 474.045 716.637 448.174 700.791 187.266C691.268 30.402 500.859 45.0487 453.3 186.887C381.309 361.81 513.646 520.687 567.483 678.301C588.278 791.13 481.152 860.525 390.83 788.642C321.982 730.236 225.544 681.47 142.344 742.279C19.9646 827.3 79.872 998.37 197.292 1059.43C277.308 1121.91 498.607 1131.41 488.53 1245.43C483.608 1300.83 427.463 1304.24 388.839 1327.28C292.242 1381.44 296.209 1533.95 395.527 1583.05" stroke="url(#paint0_linear_498_528)" strokeWidth="150" strokeMiterlimit="10" strokeLinecap="round"/>
             <defs>
@@ -149,7 +167,7 @@ export default function App() {
           </svg>
         </div>
 
-        <div className="pointer-events-none absolute left-[-900px] top-[-400px]">
+        <div className="pointer-events-none absolute left-[-900px] top-[-400px] hidden md:block">
           <svg width="1614" height="1886" viewBox="0 0 1614 1886" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path opacity="0.08" d="M75.0137 270.199C132.755 575.335 730.484 798.493 1029.79 715.821C1182.03 673.743 1320.77 553.076 1344.42 396.963C1368.01 240.815 1241.37 67.24 1083.59 75.2743C963.264 81.386 868.625 179.639 802.525 280.397C557.137 654.301 539.483 1177.58 795.666 1544.15C878.63 1662.85 993.31 1767.12 1134.11 1801.01C1274.91 1834.89 1442.25 1781.75 1509.25 1653.34C1585.91 1506.41 1504.36 1314.44 1366.17 1222.88C1227.97 1131.32 1051.58 1120.21 886.499 1135.17C676.926 1154.2 470.856 1210.8 280.984 1301.47" stroke="url(#paint0_linear_498_527)" strokeWidth="150" strokeMiterlimit="10" strokeLinecap="round"/>
             <defs>
