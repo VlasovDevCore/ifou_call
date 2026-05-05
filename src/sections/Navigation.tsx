@@ -1,0 +1,128 @@
+import { useEffect, useRef, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import gsap from 'gsap';
+
+const navLinks = [
+  { label: 'О продукте', href: '#problem' },
+  { label: 'Возможности', href: '#features' },
+  { label: 'Дорожная карта', href: '#roadmap' },
+  { label: 'Регистрация', href: '#cta' },
+];
+
+export default function Navigation() {
+  const navRef = useRef<HTMLElement>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    gsap.fromTo(navRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    const el = document.querySelector(href);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <nav
+      ref={navRef}
+      className="fixed top-5 left-0 right-0 z-[100] h-16 transition-all duration-300"
+    >
+      <div className="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6 bg-[rgba(235,230,255,0.8)] rounded-full">
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-2 relative z-10">
+<svg width="161" height="37" viewBox="0 0 161 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_534_621)">
+<path d="M39.752 29.6379C38.7347 28.7206 37.8471 27.791 37.1006 26.8823C35.8689 27.6557 34.5267 28.3196 33.0786 28.8107C31.3847 29.3851 29.546 29.7229 27.57 29.7229C25.594 29.7229 23.7553 29.3851 22.0614 28.8107C20.6133 28.3196 19.2711 27.6557 18.0394 26.8823C17.293 27.791 16.4053 28.7206 15.388 29.6379C14.7639 30.2006 14.0707 30.7292 13.3412 31.2643C14.5745 32.1419 15.9302 32.9585 17.4036 33.6569C20.3378 35.0476 23.739 35.9694 27.57 35.9694C31.401 35.9694 34.8022 35.0476 37.7364 33.6569C39.2099 32.9585 40.5656 32.1419 41.7988 31.2643C41.0693 30.7292 40.3761 30.2006 39.752 29.6379Z" fill="#6F43F8"/>
+<path d="M51.1919 4.83035C47.2228 -1.36836 37.3846 -1.8474 33.1086 4.8303C29.237 10.8767 31.0203 17.2228 33.3012 21.4727C34.1635 23.0794 35.4154 24.9651 37.1006 26.8823C37.8471 27.791 38.7347 28.7206 39.752 29.6379C40.3761 30.2006 41.0693 30.7292 41.7988 31.2643C44.0678 32.9969 46.7662 34.588 49.9296 35.8133L52.8577 36.9475L55.14 31.1274L52.212 29.9932C50.0823 29.1683 48.2168 28.1415 46.5962 27.0163C45.4388 26.2128 44.401 25.3486 43.4448 24.4865L41.9072 22.8555C40.5142 21.2845 39.5072 19.7635 38.8468 18.5329C37.0208 15.1306 36.3228 11.4453 38.4111 8.18397L38.451 8.12285C40.1603 5.55551 44.2796 5.6699 45.8894 8.18397C47.7526 11.0938 46.8626 15.1772 45.387 18.1104C45.2482 18.3863 45.022 18.7884 44.7021 19.2868C44.5717 19.4896 44.3996 19.848 44.2436 20.0726C43.9557 20.487 43.6314 20.9023 43.2668 21.3352C44.4254 22.5227 47.015 24.9719 48.1037 25.2692C48.4145 24.8821 48.7155 24.4905 49.0026 24.0986C49.0343 24.0552 49.0657 24.0121 49.0968 23.9692C49.2337 23.7801 49.3646 23.5948 49.4894 23.4139C49.668 23.1551 49.8347 22.9045 49.9885 22.6654C50.4081 22.0131 50.752 21.414 51.0087 20.9037C52.7283 17.4855 54.9202 10.6532 51.1919 4.83035Z" fill="#6F43F8"/>
+<path d="M22.0314 4.8303C17.7554 -1.8474 7.91725 -1.36836 3.94813 4.83035C0.219767 10.6532 2.41173 17.4855 4.13134 20.9037C4.38804 21.414 4.73195 22.0131 5.15152 22.6654C5.30528 22.9045 5.47198 23.1551 5.65062 23.4139C5.77811 23.5979 5.9084 23.7828 6.04211 23.9677C6.07355 24.0111 6.10531 24.0547 6.13738 24.0986C6.42447 24.4905 6.72556 24.8821 7.0363 25.2692C8.12503 24.9719 10.7146 22.5227 11.8733 21.3352C11.5086 20.9023 11.1843 20.487 10.8965 20.0726C10.7404 19.848 10.5683 19.4896 10.438 19.2868C10.118 18.7884 9.89186 18.3863 9.75302 18.1104C8.27744 15.1772 7.38745 11.0938 9.25064 8.18397C10.8604 5.6699 14.9797 5.55551 16.689 8.12285L16.7289 8.18397C18.8172 11.4453 18.1192 15.1306 16.2933 18.5329C15.6328 19.7635 14.6258 21.2845 13.2328 22.8555L11.6952 24.4865C10.739 25.3486 9.70117 26.2128 8.54385 27.0163C6.9232 28.1415 5.05776 29.1683 2.92806 29.9932L0 31.1274L2.28232 36.9475L5.21038 35.8133C8.37377 34.588 11.0723 32.9969 13.3412 31.2643C14.0707 30.7292 14.7639 30.2006 15.388 29.6379C16.4053 28.7206 17.293 27.791 18.0394 26.8823C19.7246 24.9651 20.9765 23.0794 21.8389 21.4727C24.1197 17.2228 25.903 10.8767 22.0314 4.8303Z" fill="#6F43F8"/>
+<path d="M39.7522 29.638C38.7348 28.7207 37.8472 27.7911 37.1008 26.8823C36.5382 27.2356 35.9525 27.566 35.3442 27.8676C36.4867 29.438 38.7276 31.5795 39.8481 32.5337C40.5289 32.1308 41.1793 31.7053 41.7989 31.2644C41.0694 30.7292 40.3762 30.2007 39.7522 29.638Z" fill="#552ECE"/>
+<path d="M15.3772 29.638C16.3946 28.7207 17.2822 27.7911 18.0286 26.8823C18.5912 27.2356 19.1769 27.566 19.7852 27.8676C18.6427 29.438 16.4018 31.5795 15.2813 32.5337C14.6005 32.1308 13.9501 31.7053 13.3305 31.2644C14.0599 30.7292 14.7532 30.2007 15.3772 29.638Z" fill="#552ECE"/>
+</g>
+<path d="M71.7723 27.4736V9.23032H75.9683V27.4736H71.7723ZM79.2085 9.23032H101.465V13.0249H83.4044V17.0385H97.9261V20.8696H83.368V27.4736H79.2085V9.23032ZM118.435 27.5101C109.641 27.5101 103.804 24.1898 103.804 18.6804C103.804 13.0979 109.641 9.23032 118.435 9.23032C127.155 9.23032 132.993 13.1344 132.993 18.6439C132.993 24.1898 127.155 27.5101 118.435 27.5101ZM128.432 18.352C128.432 15.0317 124.747 13.0614 118.471 13.0614C112.123 13.0614 108.364 15.0317 108.364 18.352C108.364 22.3655 112.123 23.679 118.471 23.679C124.747 23.679 128.432 22.3655 128.432 18.352ZM147.522 27.4736C138.437 27.4736 135.554 22.6574 135.554 17.1114V9.23032H139.568V16.5276C139.568 22.256 143.435 23.9344 147.522 23.9344C151.608 23.9344 155.476 22.256 155.476 16.5276V9.23032H159.489V17.1114C159.489 22.6574 156.607 27.4736 147.522 27.4736Z" fill="#13141D"/>
+<defs>
+<clipPath id="clip0_534_621">
+<rect width="55.1608" height="36.9473" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+        </a>
+
+        {/* Desktop Nav - центрированное */}
+        <div className="hidden md:flex md:items-center md:gap-8 md:absolute md:left-1/2 md:-translate-x-1/2">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="font-sans text-[13px] font-semibold uppercase tracking-[1.04px] text-[#000] transition-colors duration-300"
+              style={{
+                fontFamily: 'Inter, sans-serif',
+                fontWeight: 600,
+                lineHeight: '19.5px',
+                verticalAlign: 'middle',
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        {/* CTA Button */}
+        <div className="hidden md:block relative z-10">
+          <a
+            href="#cta"
+            onClick={(e) => handleNavClick(e, '#cta')}
+            className="rounded-full bg-[#764cfa] px-5 py-3 text-[13px] font-medium uppercase tracking-[0.08em] text-white transition-all duration-300 hover:bg-[#a78bfa] hover:shadow-[0_0_40px_rgba(118,76,250,0.3)]"
+          >
+            Предрегистрация
+          </a>
+        </div>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="text-white md:hidden relative z-10"
+          onClick={() => setMobileOpen(!mobileOpen)}
+        >
+          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div
+          className="absolute left-0 right-0 top-16 border-b border-[rgba(118,76,250,0.15)] bg-[#0a0a1a] px-6 py-4 md:hidden"
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="block py-3 text-[13px] font-medium uppercase tracking-[0.08em] text-[#94a3b8] transition-colors hover:text-[#a78bfa]"
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#cta"
+            onClick={(e) => handleNavClick(e, '#cta')}
+            className="mt-3 block rounded-full bg-[#764cfa] px-5 py-3 text-center text-[13px] font-medium uppercase tracking-[0.08em] text-white"
+          >
+            Предрегистрация
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+}
