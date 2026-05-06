@@ -11,7 +11,7 @@ const phases = [
     title: 'Мобильное MVP',
     side: 'left' as const,
     completed: true,
-    milestones: ['Flutter iOS/Android', 'Чат, лента, истории', '50K пользователей', 'Товарный знак'],
+    milestones: ['iOS/Android', 'Чат, лента, истории', '50K пользователей', 'Видеозвонки'],
     badge: '50K пользователей',
   },
   {
@@ -19,7 +19,7 @@ const phases = [
     title: 'Десктоп + Web',
     side: 'right' as const,
     completed: true,
-    milestones: ['Tauri Windows/macOS', 'React Web + PWA', 'Монетизация + ERID', 'IT Аккредитация, СОРМ'],
+    milestones: ['Tauri Windows/macOS', 'React Web + PWA', 'Монетизация + ERID'],
     badge: '500K пользователей',
   },
   {
@@ -27,15 +27,15 @@ const phases = [
     title: 'Масштабирование',
     side: 'left' as const,
     completed: false,
-    milestones: ['AI-модерация контента', 'Рекламный кабинет', 'Seed-раунд 80M ₽'],
+    milestones: ['AI-модерация контента', 'Рекламный кабинет'],
     badge: '500K — 2M пользователей',
   },
   {
     date: '2028',
-    title: 'Безубыточность',
+    title: 'Набираем обороты',
     side: 'right' as const,
     completed: false,
-    milestones: ['2M MAU', 'Выход на рынок СНГ', 'EBITDA положительный'],
+    milestones: ['2M пользователей', 'Выход на рынок СНГ'],
     badge: '2M пользователей',
   },
   {
@@ -43,8 +43,8 @@ const phases = [
     title: 'Лидерство',
     side: 'left' as const,
     completed: false,
-    milestones: ['Запуск ИИ-ассистента IFO', '6M пользователей', '1890M ₽ выручки', 'Подготовка к exit/IPO'],
-    badge: '6M пользователей · 1.89 млрд ₽',
+    milestones: ['Запуск ИИ-ассистента IFO', '6M пользователей'],
+    badge: '6M пользователей',
   },
 ];
 
@@ -144,7 +144,7 @@ useEffect(() => {
   const line = lineRef.current;
   const timelineContainer = timelineRef.current;
   
-  const targetHeight = 1350; 
+  const targetHeight = 1260; 
   
   // Начальная высота 0
   gsap.set(line, { height: 0 });
@@ -235,7 +235,7 @@ useEffect(() => {
 
 {/* Фоновая линия */}
 <div
-  className="absolute left-1/2 top-0 h-[calc(100%-310px)] md:h-[calc(100%-270px)] mt-[10px] w-[2px] -translate-x-1/2 max-md:left-0 max-md:translate-x-0"
+  className="absolute left-1/2 top-0 h-[calc(100%-310px)] md:h-[calc(100%-220px)] mt-[10px] w-[2px] -translate-x-1/2 max-md:left-0 max-md:translate-x-0"
   style={{
     background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.1) 100%)',
     zIndex: 1,

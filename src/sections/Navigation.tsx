@@ -55,7 +55,7 @@ export default function Navigation() {
               : 'rounded-none md:rounded-full'
           } bg-[rgba(235,230,255,0.8)] md:bg-[rgba(235,230,255,0.8)] backdrop-blur-md`}
         >
-        {/* Logo */}
+        {/* Logo */} 
         <a href="#" className="flex items-center gap-2 relative z-10">
           <svg width="161" height="37" viewBox="0 0 161 37" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_534_621)">

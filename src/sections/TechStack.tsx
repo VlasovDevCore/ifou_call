@@ -8,21 +8,21 @@ gsap.registerPlugin(ScrollTrigger);
 const techs = [
   {
     icon: Smartphone,
-    title: 'Flutter',
-    description: 'Единая кодовая база для iOS, Android, Web и Desktop. Быстрый time-to-market.',
-    stat: 'Экономия 40%',
+    title: 'Android & IOS',
+    description: 'Приложения для iOS, Android, Web и Desktop. Кеширование и бекапы.',
+    stat: 'Синхронизация 100%',
   },
   {
     icon: Video,
     title: 'WebRTC',
     description: 'P2P коммуникации без серверных затрат. Аудио/видео и групповые звонки до 8 участников.',
-    stat: 'Без серверных затрат',
+    stat: 'Общайтесь как раньше',
   },
   {
     icon: Shield,
-    title: 'СОРМ',
-    description: 'Полное соответствие 152-ФЗ. Хранение данных на серверах РФ. Лицензии и сертификация.',
-    stat: 'Данные в РФ',
+    title: 'Родительские и ЖК чаты',
+    description: 'Полное соответствие 152-ФЗ. Хранение данных на серверах РФ. Полный доступ к телефону не запрашивается',
+    stat: 'Сообщения шифруются',
   },
 ];
 
@@ -64,7 +64,7 @@ export default function TechStack() {
             Технологии
           </div>
           <h2 className="text-3xl font-bold tracking-[-0.02em] text-[rgba(19,20,29,1)] md:text-5xl">
-            Flutter, WebRTC, СОРМ — экономия 40% на разработке
+            IOS, Android, Windows, MacOS, Web версия
           </h2>
         </div>
 

@@ -11,41 +11,52 @@ const ArrowIcon = () => (
   </svg>
 );
 
+const ArrowIconWhite = ({ className = "" }: { className?: string }) => (
+  <svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+  <path d="M9.33333 1L3.60417 6.72917L1 4.125" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+);
+
 const phases = [
   {
     date: 'Q2 2026',
     title: 'Мобильное MVP',
+    side: 'left' as const,
     completed: true,
-    milestones: ['Flutter iOS/Android', 'Чат, лента, истории', '50K пользователей', 'Товарный знак'],
+    milestones: ['iOS/Android', 'Чат, лента, истории', '50K пользователей', 'Видеозвонки'],
     badge: '50K пользователей',
   },
   {
     date: 'Q4 2026',
     title: 'Десктоп + Web',
+    side: 'right' as const,
     completed: true,
-    milestones: ['Tauri Windows/macOS', 'React Web + PWA', 'Монетизация + ERID', 'IT Аккредитация, СОРМ'],
+    milestones: ['Tauri Windows/macOS', 'React Web + PWA', 'Монетизация + ERID'],
     badge: '500K пользователей',
   },
   {
     date: '2027',
     title: 'Масштабирование',
+    side: 'left' as const,
     completed: false,
-    milestones: ['AI-модерация контента', 'Рекламный кабинет', 'Seed-раунд 80M ₽'],
+    milestones: ['AI-модерация контента', 'Рекламный кабинет'],
     badge: '500K — 2M пользователей',
   },
   {
     date: '2028',
-    title: 'Безубыточность',
+    title: 'Набираем обороты',
+    side: 'right' as const,
     completed: false,
-    milestones: ['2M MAU', 'Выход на рынок СНГ', 'EBITDA положительный'],
+    milestones: ['2M пользователей', 'Выход на рынок СНГ'],
     badge: '2M пользователей',
   },
   {
     date: '2030',
     title: 'Лидерство',
+    side: 'left' as const,
     completed: false,
-    milestones: ['Запуск ИИ-ассистента IFO', '6M пользователей', '1890M ₽ выручки', 'Подготовка к exit/IPO'],
-    badge: '6M пользователей · 1.89 млрд ₽',
+    milestones: ['Запуск ИИ-ассистента IFO', '6M пользователей'],
+    badge: '6M пользователей',
   },
 ];
 
@@ -137,7 +148,7 @@ export default function RoadmapMobile() {
     const line = lineRef.current;
     const timelineContainer = timelineRef.current;
     
-    const targetHeight = 1100;
+    const targetHeight = 1020;
     
     gsap.set(line, { height: 0 });
     
@@ -210,7 +221,7 @@ export default function RoadmapMobile() {
 
           {/* Фоновая линия */}
           <div
-            className="absolute left-[11px] top-2 h-[calc(100%-260px)] w-[2px]"
+            className="absolute left-[11px] top-2 h-[calc(100%-200px)] w-[2px]"
             style={{
               background: 'linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.1) 100%)',
               zIndex: 0,
@@ -263,7 +274,7 @@ export default function RoadmapMobile() {
                         {phase.milestones.map((m, j) => (
                           <li key={j} className="flex items-start gap-2 text-sm text-white/80">
                             {phase.completed ? (
-                              <ArrowIcon />
+                              <ArrowIconWhite className="mt-1"/>
                             ) : (
                               <Circle size={12} className="mt-0.5 shrink-0 text-white/50" />
                             )}

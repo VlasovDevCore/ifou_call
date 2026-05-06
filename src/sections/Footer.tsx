@@ -68,8 +68,16 @@ export default function Footer() {
                 <div className="mb-4 text-[13px] font-medium uppercase tracking-[0.08em] text-[#764cfa]">
                   Контакты
                 </div>
-                <p className="text-sm text-gray-600 break-words">Telegram: @Igor_Dorofeev_tg</p>
-                <p className="mt-1 text-sm text-gray-600">Сайт: ifou.ru</p>
+                <p className="text-sm text-gray-600 break-words">Telegram: <a
+  target="_blank"
+  className="relative text-[#6f43f8] no-underline inline-block
+    after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] 
+    after:bg-[#6f43f8] after:transition-all after:duration-300 after:ease-in-out
+    hover:after:w-full"
+  href="https://t.me/igor_dorofeevv/"
+>
+  @igor_dorofeevv
+</a></p>
               </div>
             </div>
           </div>

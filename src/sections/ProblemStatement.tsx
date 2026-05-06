@@ -144,7 +144,7 @@ export default function ProblemStatement() {
     <section
       id="problem"
       ref={sectionRef}
-      className="relative bg-[#6F43F8] px-6 pb-16 pt-16 md:pt-26 md:pb-24 overflow-hidden md:py-32"
+      className="relative bg-[#6F43F8] px-6 pb-16 pt-16 md:pb-24 overflow-hidden md:py-32"
     >
       {/* Particle canvas */}
       <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-0" />

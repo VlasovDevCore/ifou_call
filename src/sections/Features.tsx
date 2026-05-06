@@ -10,7 +10,7 @@ const features = [
     icon: MessageCircle,
     title: 'Мессенджер',
     subtitle: 'Замена Telegram + WhatsApp',
-    items: ['Чаты, группы, каналы', 'Файлы до 100 МБ', 'Аудио/видео звонки WebRTC', 'SSE, Key Escrow шифрование'],
+    items: ['Чаты, группы, каналы', 'Файлы до 100 МБ', 'Аудио/видео звонки', 'SSE, Key Escrow шифрование'],
   },
   {
     icon: Users,

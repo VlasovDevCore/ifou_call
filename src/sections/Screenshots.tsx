@@ -84,7 +84,7 @@ export default function Screenshots() {
 
       {/* Desktop grid */}
       <div className="hidden md:block mx-auto max-w-[1400px] px-6">
-        <div className="grid grid-cols-6 gap-6">
+        <div className="grid grid-cols-6 gap-10">
           {screenshots.map((s, i) => (
             <div
               key={i}
