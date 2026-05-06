@@ -185,6 +185,7 @@ export default function App() {
           os={os}
           setOs={setOs}
           onSuccess={handleFormSuccess}
+          colorBtn="rgba(167,139,250,1)" 
         />
         <Footer         />
       </div>

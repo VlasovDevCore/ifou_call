@@ -123,7 +123,12 @@
 .phone-mockup:hover {
   transform: translateY(-12px);
   /* box-shadow: 0 30px 80px rgba(118, 76, 250, 0.2); */
+    @media (max-width: 760px) {
+      transform: none;
+    }
+
 }
+
 
 /* Custom selection */
 ::selection {

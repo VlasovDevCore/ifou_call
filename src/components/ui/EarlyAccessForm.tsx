@@ -7,6 +7,7 @@ interface EarlyAccessFormProps {
   os: string;
   setOs: (v: string) => void;
   onSuccess: () => void;
+  colorBtn?: string; // Добавляем опциональный пропс для цвета
 }
 
 export default function EarlyAccessForm({ 
@@ -14,7 +15,8 @@ export default function EarlyAccessForm({
   setPhone, 
   os, 
   setOs, 
-  onSuccess
+  onSuccess,
+  colorBtn = '#764cfa' // Значение по умолчанию
 }: EarlyAccessFormProps) {
   const [inputValue, setInputValue] = useState(() => {
     const storedPhone = phone.replace(/^\+7/, '');
@@ -232,14 +234,25 @@ export default function EarlyAccessForm({
           </p>
         )}
 
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="h-14 w-full mt-4 rounded-full text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_40px_rgba(118,76,250,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
-          style={{ background: 'linear-gradient(90deg, #764cfa, #a78bfa)', fontFamily: 'Inter, sans-serif' }}
-        >
-          {isLoading ? 'Отправка...' : 'Получить ранний доступ'}
-        </button>
+    <button
+      type="submit"
+      disabled={isLoading}
+      className="relative group h-14 w-full mt-4 rounded-full text-base font-semibold text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+      style={{ fontFamily: 'Inter, sans-serif' }}
+    >
+      {/* Градиент по умолчанию */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#764cfa] to-[#a78bfa]" />
+      
+      {/* Ховер градиент - используем переданный цвет */}
+      <div 
+        className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ backgroundColor: colorBtn || '#764cfa' }}  // используем colorBtn с fallback
+      />
+      
+      <span className="relative z-10">
+        {isLoading ? 'Отправка...' : 'Получить ранний доступ'}
+      </span>
+    </button>
       </form>
     </div>
   );

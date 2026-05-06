@@ -12,6 +12,7 @@ interface FinalCTAProps {
   os: string;
   setOs: (v: string) => void;
   onSuccess: () => void;
+  colorBtn?: string;
 }
 
 const trustItems = [
@@ -20,7 +21,7 @@ const trustItems = [
   { icon: Lock, label: 'Шифрование SSE' },
 ];
 
-export default function FinalCTA({ phone, setPhone, os, setOs, onSuccess }: FinalCTAProps) {
+export default function FinalCTA({ phone, setPhone, os, setOs, onSuccess, colorBtn = '#764cfa'}: FinalCTAProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
@@ -114,6 +115,7 @@ export default function FinalCTA({ phone, setPhone, os, setOs, onSuccess }: Fina
             os={os}
             setOs={setOs}
             onSuccess={onSuccess}
+            colorBtn={colorBtn}
           />
         </div>
 
