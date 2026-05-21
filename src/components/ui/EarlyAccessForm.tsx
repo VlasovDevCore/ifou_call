@@ -7,7 +7,7 @@ interface EarlyAccessFormProps {
   os: string;
   setOs: (v: string) => void;
   onSuccess: () => void;
-  colorBtn?: string; // Добавляем опциональный пропс для цвета
+  colorBtn?: string;
 }
 
 export default function EarlyAccessForm({ 
@@ -16,7 +16,7 @@ export default function EarlyAccessForm({
   os, 
   setOs, 
   onSuccess,
-  colorBtn = '#764cfa' // Значение по умолчанию
+  colorBtn = '#764cfa'
 }: EarlyAccessFormProps) {
   const [inputValue, setInputValue] = useState(() => {
     const storedPhone = phone.replace(/^\+7/, '');
@@ -25,12 +25,17 @@ export default function EarlyAccessForm({
   
   const [errors, setErrors] = useState({
     phone: false,
-    os: false
+    os: false,
+    consent: false,
+    privacy: false
   });
   
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [consentChecked, setConsentChecked] = useState(false);
+  const [privacyChecked, setPrivacyChecked] = useState(false);
 
   useEffect(() => {
     if (!os) {
@@ -38,7 +43,6 @@ export default function EarlyAccessForm({
     }
   }, [os, setOs]);
 
-  // Автоматически скрываем сообщение через 3 секунды
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
@@ -48,14 +52,27 @@ export default function EarlyAccessForm({
     }
   }, [successMessage]);
 
+  // Проверка, заполнена ли форма корректно
+  const isFormValid = () => {
+    const phonePattern = /^9\d{9}$/;
+    const isPhoneValid = phonePattern.test(inputValue);
+    const isOsValid = !!os;
+    const isConsentValid = consentChecked;
+    const isPrivacyValid = privacyChecked;
+    
+    return isPhoneValid && isOsValid && isConsentValid && isPrivacyValid;
+  };
+
   const validateForm = () => {
     const phonePattern = /^9\d{9}$/;
     const newErrors = {
       phone: !phonePattern.test(inputValue),
-      os: !os
+      os: !os,
+      consent: !consentChecked,
+      privacy: !privacyChecked
     };
     setErrors(newErrors);
-    return !newErrors.phone && !newErrors.os;
+    return !newErrors.phone && !newErrors.os && !newErrors.consent && !newErrors.privacy;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -79,30 +96,22 @@ export default function EarlyAccessForm({
         
         const data = await response.json();
         
-        // Успешная отправка или номер уже существует
         if (data.success || (data.error && (data.error.includes('уже зарегистрирован') || data.error.includes('24 часа')))) {
           setPhone(fullPhone);
-          
-          // Очищаем поле ввода
           setInputValue('');
-          
-          // Очищаем ошибки
           setErrors({
             phone: false,
-            os: false
+            os: false,
+            consent: false,
+            privacy: false
           });
-          
-          // Вызываем колбэк успеха в обоих случаях
           onSuccess();
         } else {
-          // Показываем сообщение об ошибке
-          setSuccessMessage('❌ ' + (data.error || 'Произошла ошибка. Попробуйте позже.'));
+          onSuccess();
         }
       } catch (error) {
-        console.error('Error:', error);
-        // Показываем сообщение об ошибке
-        setSuccessMessage('❌ Ошибка сети. Проверьте подключение к интернету.');
-      } finally {
+          onSuccess();      
+        } finally {
         setIsLoading(false);
       }
     }
@@ -127,6 +136,20 @@ export default function EarlyAccessForm({
     setOs(selectedOs);
     if (errors.os) {
       setErrors(prev => ({ ...prev, os: false }));
+    }
+  };
+
+  const handleConsentChange = (checked: boolean) => {
+    setConsentChecked(checked);
+    if (errors.consent) {
+      setErrors(prev => ({ ...prev, consent: false }));
+    }
+  };
+
+  const handlePrivacyChange = (checked: boolean) => {
+    setPrivacyChecked(checked);
+    if (errors.privacy) {
+      setErrors(prev => ({ ...prev, privacy: false }));
     }
   };
 
@@ -234,25 +257,90 @@ export default function EarlyAccessForm({
           </p>
         )}
 
-    <button
-      type="submit"
-      disabled={isLoading}
-      className="relative group h-14 w-full mt-4 rounded-full text-base font-semibold text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
-      style={{ fontFamily: 'Inter, sans-serif' }}
-    >
-      {/* Градиент по умолчанию */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#764cfa] to-[#a78bfa]" />
-      
-      {/* Ховер градиент - используем переданный цвет */}
-      <div 
-        className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ backgroundColor: colorBtn || '#764cfa' }}  // используем colorBtn с fallback
-      />
-      
-      <span className="relative z-10">
-        {isLoading ? 'Отправка...' : 'Получить ранний доступ'}
-      </span>
-    </button>
+        {/* Чекбоксы согласий с красной обводкой */}
+        <div className="flex flex-col gap-3 mt-2">
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={consentChecked}
+                onChange={(e) => handleConsentChange(e.target.checked)}
+                className="absolute opacity-0 w-5 h-5 cursor-pointer z-10"
+              />
+              <div className={`
+                w-5 h-5 rounded-md border-2 transition-all duration-200 pointer-events-none
+                ${consentChecked 
+                  ? 'bg-[#764cfa] border-[#764cfa]' 
+                  : errors.consent
+                  ? 'border-red-500 bg-white/10'
+                  : 'bg-white/10 border-gray-400 group-hover:border-[#764cfa]'
+                }
+              `}>
+                {consentChecked && (
+                  <svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
+            </div>
+            <span className="text-xs text-left text-white leading-relaxed transition-colors group-hover:text-gray-100 flex-1">
+              Я даю согласие на обработку моих персональных данных (имя, телефон) для связи со мной в соответствии с{' '}
+              <a href="/personal-info" target="_blank" rel="noopener noreferrer" className="relative text-[#fff] underline inline after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#764cfa] after:transition-all after:duration-300 hover:after:w-full">
+                Согласием на обработку персональных данных
+              </a>
+            </span>
+          </label>
+          
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <div className="relative">
+              <input
+                type="checkbox"
+                checked={privacyChecked}
+                onChange={(e) => handlePrivacyChange(e.target.checked)}
+                className="absolute opacity-0 w-5 h-5 cursor-pointer z-10"
+              />
+              <div className={`
+                w-5 h-5 rounded-md border-2 transition-all duration-200 pointer-events-none
+                ${privacyChecked 
+                  ? 'bg-[#764cfa] border-[#764cfa]' 
+                  : errors.privacy
+                  ? 'border-red-500 bg-white/10'
+                  : 'bg-white/10 border-gray-400 group-hover:border-[#764cfa]'
+                }
+              `}>
+                {privacyChecked && (
+                  <svg className="w-full h-full text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
+            </div>
+            <span className="text-xs text-left text-white leading-relaxed transition-colors group-hover:text-gray-100 flex-1">
+              Я ознакомлен(а) с{' '}
+              <a href="/privacy" target="_blank" rel="noopener noreferrer" className="relative text-[#fff] underline inline after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#764cfa] after:transition-all after:duration-300 hover:after:w-full">
+                Политикой конфиденциальности
+              </a>
+            </span>
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoading || !isFormValid()}
+          className="relative group h-14 w-full mt-4 rounded-full text-base font-semibold text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+          style={{ fontFamily: 'Inter, sans-serif' }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-[#764cfa] to-[#a78bfa]" />
+          
+          <div 
+            className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={{ backgroundColor: colorBtn || '#764cfa' }}
+          />
+          
+          <span className="relative z-10">
+            {isLoading ? 'Отправка...' : 'Получить ранний доступ'}
+          </span>
+        </button>
       </form>
     </div>
   );

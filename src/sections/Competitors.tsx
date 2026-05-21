@@ -5,17 +5,17 @@ import { Check, X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const columns = ['IFOU', 'Telegram', 'VK'];
+const columns = ['IFOU', 'Telegram', 'VK', 'Max']; // 4 колонки
 
 const rows = [
-  { feature: 'Мессенджер + соцсеть в одном', values: [true, false, true] },
-  { feature: 'Встроенная монетизация блогеров', values: [true, false, true] },
-  { feature: 'Российские серверы + СОРМ 152-ФЗ', values: [true, false, true] },
-  { feature: 'Простой запуск рекламы из приложения', values: [true, false, false] },
-  { feature: 'Автоматическая маркировка ERID', values: [true, false, false] },
-  { feature: 'Работа без блокировок и VPN', values: [true, false, true] },
-  { feature: 'Собственная ИИ-модель', values: [true, false, false] },
-  { feature: 'API для интеграций (B2B)', values: [true, true, true] },
+  { feature: 'Мессенджер + соцсеть в одном', values: [true, false, false, false] },
+  { feature: 'Встроенная монетизация блогеров', values: [true, false, true, false] },
+  { feature: 'Российские серверы', values: [true, false, true, true] },
+  { feature: 'Простой запуск рекламы из приложения', values: [true, false, false, false] },
+  { feature: 'Автоматическая маркировка ERID', values: [true, false, false, false] },
+  { feature: 'Работа без блокировок и VPN', values: [true, false, true, true] },
+  { feature: 'Непринужденная миграция пользователей', values: [true, false, false, false] },
+  { feature: 'API для интеграций (B2B)', values: [true, true, true, false] },
 ];
 
 const ArrowIcon = () => (
@@ -62,18 +62,20 @@ export default function Competitors() {
             Конкурентное преимущество
           </div>
           <h2 className="text-3xl font-bold tracking-[-0.02em] text-[rgba(19,20,29,1)] md:text-5xl px-4 md:px-0">
-            IFOU vs Telegram, VK
+            IFOU vs Telegram, VK, Max
           </h2>
         </div>
       </div>
 
-      {/* Table with horizontal scroll on mobile */}
-      <div className="overflow-x-auto md:overflow-visible" style={{ scrollbarWidth: 'none' }}>
+      <div className="overflow-x-auto md:overflow-visible" style={{ scrollbarWidth: 'thin' }}>
+        <div className="md:hidden text-center text-xs text-gray-400 pb-2">
+          ← Свайпайте вправо для просмотра всех колонок →
+        </div>
         <div className="mx-auto max-w-[1300px] md:px-6">
-          <div className="min-w-[640px] md:min-w-0 px-4 md:px-0">
-            {/* Header row */}
-            <div className="table-row grid grid-cols-4 gap-0">
-              <div className="p-4"></div>
+          <div className="min-w-[800px] md:min-w-0 px-4 md:px-0">
+            {/* Header row - теперь 5 колонок (1 пустая + 4 платформы) */}
+            <div className="table-row grid grid-cols-5 gap-0">
+              <div className="p-4"></div> {/* Пустая ячейка */}
               {columns.map((col, i) => (
                 <div
                   key={i}
@@ -87,11 +89,11 @@ export default function Competitors() {
               ))}
             </div>
 
-            {/* Data rows */}
+            {/* Data rows - теперь 5 колонок */}
             {rows.map((row, i) => (
               <div
                 key={i}
-                className="table-row grid grid-cols-4 gap-0 border-t border-[rgba(118,76,250,0.1)]"
+                className="table-row grid grid-cols-5 gap-0 border-t border-[rgba(118,76,250,0.1)]"
                 style={i % 2 === 1 ? { backgroundColor: 'rgba(118, 76, 250, 0.03)' } : {}}
               >
                 <div className="flex items-center p-4 text-sm text-[rgba(49,49,49,1)]">
@@ -118,7 +120,6 @@ export default function Competitors() {
         </div>
       </div>
 
-      {/* Summary - outside scroll container */}
       <div className="mx-auto max-w-[1300px] px-6 md:px-6 mt-4">
         <div className="pt-5 text-center text-sm leading-relaxed text-[rgba(111,67,248,1)] px-4 md:px-0">
           Единственная платформа с полным набором: мессенджер + соцсеть + монетизация + полное соответствие законодательству РФ

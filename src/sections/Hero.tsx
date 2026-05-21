@@ -109,7 +109,7 @@ export default function Hero({ phone, setPhone, os, setOs, onSuccess }: HeroProp
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[1100px] md:min-h-[1000px] items-center justify-center overflow-hidden px-4 md:px-0"
+      className="relative flex min-h-[1200px] md:min-h-[1100px] items-center justify-center overflow-hidden px-4 md:px-0"
       style={{
         background: 'rgba(158, 141, 255, 1)',
       }}
