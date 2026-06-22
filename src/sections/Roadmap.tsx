@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const phases = [
   {
-    date: 'Q2 2026',
+    date: 'Q3 2026',
     title: 'Мобильное MVP',
     side: 'left' as const,
     completed: true,
@@ -15,7 +15,7 @@ const phases = [
     badge: '50K пользователей',
   },
   {
-    date: 'Q4 2026',
+    date: 'Q4 2027',
     title: 'Десктоп + Web',
     side: 'right' as const,
     completed: true,
@@ -23,7 +23,7 @@ const phases = [
     badge: '500K пользователей',
   },
   {
-    date: '2027',
+    date: '2028',
     title: 'Масштабирование',
     side: 'left' as const,
     completed: false,
@@ -31,7 +31,7 @@ const phases = [
     badge: '500K — 2M пользователей',
   },
   {
-    date: '2028',
+    date: '2029',
     title: 'Набираем обороты',
     side: 'right' as const,
     completed: false,

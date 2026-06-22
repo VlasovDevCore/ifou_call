@@ -30,6 +30,18 @@ export default function Navigation() {
     }
   };
 
+  // Обработчик клика по логотипу
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    
+    if (location.pathname !== '/') {
+      window.location.href = '/';
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   // Закрытие меню при клике вне его
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -64,7 +76,11 @@ export default function Navigation() {
           } bg-[rgba(235,230,255,0.8)] md:bg-[rgba(235,230,255,0.8)] backdrop-blur-md`}
         >
         {/* Logo */} 
-        <a href="#" className="flex items-center gap-2 relative z-10">
+        <a 
+          href="/" 
+          onClick={handleLogoClick} 
+          className="flex items-center gap-2 relative z-10"
+        >
           <svg width="161" height="37" viewBox="0 0 161 37" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_534_621)">
               <path d="M39.752 29.6379C38.7347 28.7206 37.8471 27.791 37.1006 26.8823C35.8689 27.6557 34.5267 28.3196 33.0786 28.8107C31.3847 29.3851 29.546 29.7229 27.57 29.7229C25.594 29.7229 23.7553 29.3851 22.0614 28.8107C20.6133 28.3196 19.2711 27.6557 18.0394 26.8823C17.293 27.791 16.4053 28.7206 15.388 29.6379C14.7639 30.2006 14.0707 30.7292 13.3412 31.2643C14.5745 32.1419 15.9302 32.9585 17.4036 33.6569C20.3378 35.0476 23.739 35.9694 27.57 35.9694C31.401 35.9694 34.8022 35.0476 37.7364 33.6569C39.2099 32.9585 40.5656 32.1419 41.7988 31.2643C41.0693 30.7292 40.3761 30.2006 39.752 29.6379Z" fill="#6F43F8"/>

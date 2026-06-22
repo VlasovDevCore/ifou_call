@@ -10,6 +10,7 @@ const navLinks = [
 
 export default function Footer() {
   const [showCookieBanner, setShowCookieBanner] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     // Проверяем, давал ли пользователь согласие на cookies

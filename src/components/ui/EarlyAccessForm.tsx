@@ -285,7 +285,7 @@ export default function EarlyAccessForm({
             </div>
             <span className="text-xs text-left text-white leading-relaxed transition-colors group-hover:text-gray-100 flex-1">
               Я даю согласие на обработку моих персональных данных (имя, телефон) для связи со мной в соответствии с{' '}
-              <a href="/personal-info" target="_blank" rel="noopener noreferrer" className="relative text-[#fff] underline inline after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#764cfa] after:transition-all after:duration-300 hover:after:w-full">
+              <a href="/personal-info" target="_blank" rel="noopener noreferrer" className="relative text-[#fff] underline inline">
                 Согласием на обработку персональных данных
               </a>
             </span>
@@ -317,7 +317,7 @@ export default function EarlyAccessForm({
             </div>
             <span className="text-xs text-left text-white leading-relaxed transition-colors group-hover:text-gray-100 flex-1">
               Я ознакомлен(а) с{' '}
-              <a href="/privacy" target="_blank" rel="noopener noreferrer" className="relative text-[#fff] underline inline after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#764cfa] after:transition-all after:duration-300 hover:after:w-full">
+              <a href="/privacy" target="_blank" rel="noopener noreferrer" className="relative text-[#fff] underline inline">
                 Политикой конфиденциальности
               </a>
             </span>
