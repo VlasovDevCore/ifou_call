@@ -15,7 +15,7 @@ const phases = [
     badge: '50K пользователей',
   },
   {
-    date: 'Q4 2027',
+    date: '2027',
     title: 'Десктоп + Web',
     side: 'right' as const,
     completed: true,
