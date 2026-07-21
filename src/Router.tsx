@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import PersonalInfo from './pages/PersonalInfo';
 import Privacy from './pages/Privacy';
+import AppPage from './pages/App';
 
 export default function Router() {
   return (
@@ -10,6 +11,7 @@ export default function Router() {
         <Route path="/" element={<App />} />
         <Route path="/personal-info" element={<PersonalInfo />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/app" element={<AppPage />} />
       </Routes>
     </BrowserRouter>
   );
