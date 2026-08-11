@@ -168,7 +168,7 @@ export default function Hero({ phone, setPhone, os, setOs, onSuccess }: HeroProp
       <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-0" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto flex max-w-[1000px] flex-col items-center px-0 md:px-6 pb-12 md:pb-20 pt-8 md:pt-0 text-center">
+      <div className="relative z-10 mx-auto flex max-w-[1200px] flex-col items-center px-0 md:px-6 pb-12 md:pb-20 pt-8 md:pt-0 text-center">
         <div 
           ref={labelRef} 
           className="mb-3 md:mb-4 text-[12px] md:text-[14px] font-semibold uppercase tracking-[0.8px] md:tracking-[1.04px] leading-[18px] md:leading-[19.5px] text-[rgba(111,67,248,1)]"
@@ -273,7 +273,7 @@ export default function Hero({ phone, setPhone, os, setOs, onSuccess }: HeroProp
                 verticalAlign: 'middle',
               }}
             >
-              152-ФЗ
+              Без блокировок
             </div>
             <div 
               className="mt-1 text-[12px] md:text-[14px] leading-[18px] md:leading-[20px] text-[white]"
@@ -283,7 +283,7 @@ export default function Hero({ phone, setPhone, os, setOs, onSuccess }: HeroProp
                 verticalAlign: 'middle',
               }}
             >
-              полное соответствие
+              доступен во всем мире 24/7
             </div>
           </div>
         </div>

@@ -122,7 +122,7 @@ export default function Competitors() {
 
       <div className="mx-auto max-w-[1300px] px-6 md:px-6 mt-4">
         <div className="pt-5 text-center text-sm leading-relaxed text-[rgba(111,67,248,1)] px-4 md:px-0">
-          Единственная платформа с полным набором: мессенджер + соцсеть + монетизация + полное соответствие законодательству РФ
+          Единственная платформа с полным набором: мессенджер + соцсеть + монетизация + стабильная работа в РФ без VPN
         </div>
       </div>
     </section>
