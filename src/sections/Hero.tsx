@@ -273,7 +273,7 @@ export default function Hero({ phone, setPhone, os, setOs, onSuccess }: HeroProp
                 verticalAlign: 'middle',
               }}
             >
-              Без блокировок
+              24/7
             </div>
             <div 
               className="mt-1 text-[12px] md:text-[14px] leading-[18px] md:leading-[20px] text-[white]"
@@ -282,8 +282,8 @@ export default function Hero({ phone, setPhone, os, setOs, onSuccess }: HeroProp
                 fontWeight: 400,
                 verticalAlign: 'middle',
               }}
-            >
-              доступен во всем мире 24/7
+            >    
+              Без блокировок
             </div>
           </div>
         </div>

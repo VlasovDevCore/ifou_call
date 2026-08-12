@@ -90,7 +90,7 @@ interface FinalCTAProps {
 
 const trustItems = [
   { icon: RocketIcon, label: 'Быстрый запуск' },
-  { icon: CircleSlashIcon, label: 'Закрыто' },
+  { icon: CircleSlashIcon, label: 'Не заблокируют в РФ' },
   { icon: LockIcon, label: 'Есть шифрование' },
 ];
 
