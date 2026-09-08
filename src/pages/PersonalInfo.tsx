@@ -66,7 +66,7 @@ const PersonalInfoPage = () => {
           <p className="text-gray-700 font-semibold mt-4 mb-2">Отзыв согласия:</p>
           <p className="text-gray-700 mb-6">
             настоящее согласие может быть отозвано мною путем направления письменного уведомления на адрес электронной почты Оператора: 
-            <a href="mailto:info@moszapusk.ru" className="text-[#764cfa] hover:underline"> info@moszapusk.ru</a> 
+            <a href="mailto:hello@ifou.ru" className="text-[#764cfa] hover:underline"> hello@ifou.ru </a> 
             с пометкой «Отзыв согласия на обработку ПД». В случае отзыва согласия Оператор обязан прекратить обработку моих 
             персональных данных и уничтожить их в течение 30 (тридцати) календарных дней, если иное не предусмотрено федеральным законом.
           </p>
