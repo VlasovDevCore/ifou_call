@@ -10,6 +10,10 @@ if (basename($_SERVER['PHP_SELF']) === 'config.php') {
     die('Access denied');
 }
 
+define('IFOU_BACKEND_URL', 'http://localhost:3001');
+define('IFOU_ADMIN_API_KEY', '7KeCBe/2IjO6UTDyQbg8FjQPXPpaW3ovj7Oq9rU2Dok=');
+define('IFOU_ADMIN_PASSWORD_HASH', '<результат команды ниже>');
+
 // Конфигурация БД - вынесите за пределы веб-доступа
 // Создайте файл вне public_html и подключите его
 // Например: /home/user/config/db_config.php
